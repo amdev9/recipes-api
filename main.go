@@ -18,6 +18,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 
 	_ "github.com/joho/godotenv/autoload"
+
+	"github.com/go-redis/redis"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -34,6 +36,15 @@ import (
 var recipesHandler *handlers.RecipesHandler
 
 func init() {
+
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	})
+	status := redisClient.Ping()
+	fmt.Println(status)
+
 	ctx := context.Background()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGO_URI")))
 
