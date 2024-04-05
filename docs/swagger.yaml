@@ -1,0 +1,137 @@
+basePath: /
+definitions:
+  main.Recipe:
+    properties:
+      id:
+        type: string
+      ingredients:
+        items:
+          type: string
+        type: array
+      instructions:
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      publishedAt:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    name: twitter @amdev9
+    url: https://x.com/amdev99
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Recipes API
+  version: "1.0"
+paths:
+  /recipes:
+    get:
+      consumes:
+      - application/json
+      description: get recipes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/main.Recipe'
+              type: array
+            type: array
+      summary: List recipes
+      tags:
+      - recipes
+    post:
+      consumes:
+      - application/json
+      description: add by json recipe
+      parameters:
+      - description: Add recipe
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/main.Recipe'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Recipe'
+      summary: Add recipe
+      tags:
+      - recipes
+  /recipes/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete by recipe ID
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Recipe'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Delete recipe
+      tags:
+      - recipes
+    put:
+      consumes:
+      - application/json
+      description: Update by json recipe
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update recipe
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/main.Recipe'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Recipe'
+      summary: Update recipe
+      tags:
+      - recipes
+  /recipes/search:
+    get:
+      responses: {}
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

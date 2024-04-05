@@ -1,0 +1,23 @@
+[
+    {
+      "id": "co7c8o1clfl5fc6dhtt0",
+      "name": "Homemade Pizza",
+      "tags": [
+        "italian",
+        "pizza",
+        "dinner"
+      ],
+      "Ingredients": [
+        "1 1/2 cups (355 ml) warm water (105°F-115°F)",
+        "1 package (2 1/4 teaspoons) of active dry yeast",
+        "3 3/4 cups (490 g) bread flour",
+        "feta cheese, firm mozzarella cheese, grated"
+      ],
+      "Instructions": [
+        "Step 1.",
+        "Step 2.",
+        "Step 3."
+      ],
+      "PublishedAt": "2024-04-04T18:16:48.416242+03:00"
+    }
+  ]
