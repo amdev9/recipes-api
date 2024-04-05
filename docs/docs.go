@@ -44,7 +44,7 @@ const docTemplate = `{
                             "items": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/definitions/main.Recipe"
+                                    "$ref": "#/definitions/models.Recipe"
                                 }
                             }
                         }
@@ -70,7 +70,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Recipe"
+                            "$ref": "#/definitions/models.Recipe"
                         }
                     }
                 ],
@@ -78,7 +78,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Recipe"
+                            "$ref": "#/definitions/models.Recipe"
                         }
                     }
                 }
@@ -116,7 +116,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/main.Recipe"
+                            "$ref": "#/definitions/models.Recipe"
                         }
                     }
                 ],
@@ -124,7 +124,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Recipe"
+                            "$ref": "#/definitions/models.Recipe"
                         }
                     }
                 }
@@ -154,7 +154,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Recipe"
+                            "$ref": "#/definitions/models.Recipe"
                         }
                     },
                     "404": {
@@ -168,7 +168,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.Recipe": {
+        "models.Recipe": {
             "type": "object",
             "properties": {
                 "id": {
