@@ -40,7 +40,7 @@ func init() {
 //	@Tags			recipes
 //	@Accept			json
 //	@Produce		json
-//	@Param			account	body		Recipe		true	"Add recipe"
+//	@Param			recipe	body		Recipe		true	"Add recipe"
 //	@Success		200		{object}	Recipe
 //	@Router			/recipes [post]
 func NewRecipeHandler(c *gin.Context) {
@@ -79,7 +79,7 @@ func ListRecipesHandler(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id		path		string					true	"Recipe ID"
-//	@Param			account	body		Recipe				true	"Update recipe"
+//	@Param			recipe	body		Recipe				true	"Update recipe"
 //	@Success		200		{object}	Recipe
 //	@Router			/recipes/{id} [put]
 func UpdateRecipesHandler(c *gin.Context) {
