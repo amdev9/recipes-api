@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a sample server celler server.",
-        "title": "Swagger Recipes API",
+        "title": "Swagger Recipes with Mongo API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "twitter @amdev9",
@@ -14,7 +14,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "localhost:3000",
     "basePath": "/",
     "paths": {
         "/recipes": {

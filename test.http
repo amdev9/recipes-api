@@ -1,9 +1,9 @@
 
 
-GET http://localhost:8080/recipes HTTP/1.1
+GET http://localhost:3000/recipes HTTP/1.1
 content-type: application/json
 ###
-POST http://localhost:8080/recipes HTTP/1.1
+POST http://localhost:3000/recipes HTTP/1.1
 content-type: application/json
 
 {
@@ -23,7 +23,7 @@ content-type: application/json
 }
 
 ###
-PUT http://localhost:8080/recipes/co7c8o1clfl5fc6dhtt0 HTTP/1.1
+PUT http://localhost:3000/recipes/co7c8o1clfl5fc6dhtt0 HTTP/1.1
 content-type: application/json
 
 {
@@ -43,9 +43,9 @@ content-type: application/json
 }
 
 ###
-DELETE http://localhost:8080/recipes/co7c8o1clfl5fc6dhtt0 HTTP/1.1
+DELETE http://localhost:3000/recipes/661025abe5baa013b0546695 HTTP/1.1
 content-type: application/json
 
 ###
-GET http://localhost:8080/recipes/search?tag=italian HTTP/1.1
+GET http://localhost:3000/recipes/search?tag=pizza HTTP/1.1
 content-type: application/json

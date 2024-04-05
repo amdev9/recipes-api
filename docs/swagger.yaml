@@ -24,7 +24,7 @@ definitions:
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
-host: localhost:8080
+host: localhost:3000
 info:
   contact:
     name: twitter @amdev9
@@ -34,7 +34,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Swagger Recipes API
+  title: Swagger Recipes with Mongo API
   version: "1.0"
 paths:
   /recipes:
