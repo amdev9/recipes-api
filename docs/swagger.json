@@ -60,7 +60,7 @@
                 "parameters": [
                     {
                         "description": "Add recipe",
-                        "name": "account",
+                        "name": "recipe",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -106,7 +106,7 @@
                     },
                     {
                         "description": "Update recipe",
-                        "name": "account",
+                        "name": "recipe",
                         "in": "body",
                         "required": true,
                         "schema": {

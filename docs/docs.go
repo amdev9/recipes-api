@@ -66,7 +66,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "Add recipe",
-                        "name": "account",
+                        "name": "recipe",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -112,7 +112,7 @@ const docTemplate = `{
                     },
                     {
                         "description": "Update recipe",
-                        "name": "account",
+                        "name": "recipe",
                         "in": "body",
                         "required": true,
                         "schema": {

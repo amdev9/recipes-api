@@ -63,7 +63,7 @@ paths:
       parameters:
       - description: Add recipe
         in: body
-        name: account
+        name: recipe
         required: true
         schema:
           $ref: '#/definitions/main.Recipe'
@@ -114,7 +114,7 @@ paths:
         type: string
       - description: Update recipe
         in: body
-        name: account
+        name: recipe
         required: true
         schema:
           $ref: '#/definitions/main.Recipe'
