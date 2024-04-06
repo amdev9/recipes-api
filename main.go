@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"crypto/sha256"
 	"fmt"
 	"log"
 	"os"
@@ -13,6 +14,7 @@ import (
 	_ "recipes-api/docs"
 	"recipes-api/handlers"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -38,18 +40,39 @@ func init() {
 	fmt.Println(status)
 
 	ctx := context.Background()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+	client, errMongo := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGO_URI")))
+	if errMongo != nil {
+		log.Fatal("Error connection to MongoDB ")
+		return
+	} else {
+		log.Println("Connected to MongoDB")
 
-	if err = client.Ping(context.TODO(),
+		users := map[string]string{
+			"admin":      "fCRmh4Q2J7Rseqkz",
+			"packt":      "RE4zfHB35VPtTkbT",
+			"mlabouardy": "L3nSFRcZzNQ67bcc",
+		}
+		collection := client.Database(os.Getenv(
+			"MONGO_DATABASE")).Collection("users")
+		h := sha256.New()
+		for username, password := range users {
+			collection.InsertOne(ctx, bson.M{
+				"username": username,
+				"password": string(h.Sum([]byte(password))),
+			})
+		}
+	}
+
+	if err := client.Ping(context.TODO(),
 		readpref.Primary()); err != nil {
 		log.Fatal(err)
 	}
 	collection := client.Database(os.Getenv("MONGO_DATABASE")).Collection("recipes")
-	log.Println("Connected to MongoDB")
-	recipesHandler = handlers.NewRecipesHandler(ctx,
-		collection, redisClient)
 
-	authHandler = &handlers.AuthHandler{}
+	recipesHandler = handlers.NewRecipesHandler(ctx, collection, redisClient)
+
+	collectionUsers := client.Database(os.Getenv("MONGO_DATABASE")).Collection("users")
+	authHandler = handlers.NewAuthHandler(ctx, collectionUsers)
 }
 
 func cleanup() {
@@ -88,6 +111,8 @@ func main() {
 	router := gin.Default()
 	router.GET("/recipes", recipesHandler.ListRecipesHandler)
 	router.POST("/signin", authHandler.SignInHandler)
+	router.POST("/refresh", authHandler.RefreshHandler)
+
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	authorized := router.Group("/")
 	authorized.Use(authHandler.AuthMiddleware())
