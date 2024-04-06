@@ -1,5 +1,7 @@
 .air.toml
 tmp/
 .env
+certs/
+
 
 

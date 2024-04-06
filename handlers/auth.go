@@ -37,6 +37,16 @@ func NewAuthHandler(ctx context.Context, collection *mongo.Collection) *AuthHand
 	}
 }
 
+// SignOutHandler godoc
+//
+//	@Summary		Signout
+//	@Description	Signout user
+//	@Tags			auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			recipe	body		models.User	true "some"
+//	@Success		200		{object}	string
+//	@Router			/signout [post]
 func (handler *AuthHandler) SignOutHandler(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Clear()
@@ -44,6 +54,16 @@ func (handler *AuthHandler) SignOutHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Signed out..."})
 }
 
+// SignInHandler godoc
+//
+//	@Summary		Signin
+//	@Description	Sign in user
+//	@Tags			auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			recipe	body		models.User	true "comment"
+//	@Success		200		{object}	string
+//	@Router			/signin [post]
 func (handler *AuthHandler) SignInHandler(c *gin.Context) {
 	var user models.User
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -70,6 +90,16 @@ func (handler *AuthHandler) SignInHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "User signed in"})
 }
 
+// RefreshHandler godoc
+//
+//	@Summary		Refresh session
+//	@Description	refresh session for user
+//	@Tags			auth
+//	@Accept			json
+//	@Produce		json
+//	@Param			recipe	body		models.User	true "comment"
+//	@Success		200		{object}	string
+//	@Router			/refresh [post]
 func (handler *AuthHandler) RefreshHandler(c *gin.Context) {
 
 	session := sessions.Default(c)

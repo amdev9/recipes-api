@@ -180,13 +180,15 @@ func (handler *RecipesHandler) DeleteRecipeHandler(c *gin.Context) {
 
 // SearchRecipesHandler godoc
 //
-//	@Summary		Search recipes by tags
-//	@Description	get recipes
+//	@Summary		Search recipes
+//	@Description	Search recipes by tag
 //	@Tags			recipes
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{array}		[]models.Recipe
-
+//	@Param			id	path		string	true	"Recipe ID"	string
+//	@Success		200	{object}	models.Recipe
+//	@Failure		404	{object}	string
+//
 // @Router			/recipes/search [get]
 func (handler *RecipesHandler) SearchRecipesHandler(c *gin.Context) {
 	tag := c.Query("tag")

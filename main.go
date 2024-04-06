@@ -132,4 +132,5 @@ func main() {
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.Run(":3000")
+	// router.RunTLS(":443", "certs/localhost.crt", "certs/localhost.key")
 }

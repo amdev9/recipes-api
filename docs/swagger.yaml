@@ -21,6 +21,13 @@ definitions:
           type: string
         type: array
     type: object
+  models.User:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
 externalDocs:
   description: OpenAPI
   url: https://swagger.io/resources/open-api/
@@ -130,7 +137,95 @@ paths:
       - recipes
   /recipes/search:
     get:
-      responses: {}
+      consumes:
+      - application/json
+      description: Search recipes by tag
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Recipe'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Search recipes
+      tags:
+      - recipes
+  /refresh:
+    post:
+      consumes:
+      - application/json
+      description: refresh session for user
+      parameters:
+      - description: comment
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Refresh session
+      tags:
+      - auth
+  /signin:
+    post:
+      consumes:
+      - application/json
+      description: Sign in user
+      parameters:
+      - description: comment
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Signin
+      tags:
+      - auth
+  /signout:
+    post:
+      consumes:
+      - application/json
+      description: Signout user
+      parameters:
+      - description: some
+        in: body
+        name: recipe
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Signout
+      tags:
+      - auth
 securityDefinitions:
   BasicAuth:
     type: basic
