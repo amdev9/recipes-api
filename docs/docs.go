@@ -212,17 +212,6 @@ const docTemplate = `{
                     "auth"
                 ],
                 "summary": "Refresh session",
-                "parameters": [
-                    {
-                        "description": "comment",
-                        "name": "recipe",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -280,17 +269,6 @@ const docTemplate = `{
                     "auth"
                 ],
                 "summary": "Signout",
-                "parameters": [
-                    {
-                        "description": "some",
-                        "name": "recipe",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",

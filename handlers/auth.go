@@ -44,7 +44,6 @@ func NewAuthHandler(ctx context.Context, collection *mongo.Collection) *AuthHand
 //	@Tags			auth
 //	@Accept			json
 //	@Produce		json
-//	@Param			recipe	body		models.User	true "some"
 //	@Success		200		{object}	string
 //	@Router			/signout [post]
 func (handler *AuthHandler) SignOutHandler(c *gin.Context) {
@@ -97,7 +96,6 @@ func (handler *AuthHandler) SignInHandler(c *gin.Context) {
 //	@Tags			auth
 //	@Accept			json
 //	@Produce		json
-//	@Param			recipe	body		models.User	true "comment"
 //	@Success		200		{object}	string
 //	@Router			/refresh [post]
 func (handler *AuthHandler) RefreshHandler(c *gin.Context) {

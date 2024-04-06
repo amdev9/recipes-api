@@ -165,13 +165,6 @@ paths:
       consumes:
       - application/json
       description: refresh session for user
-      parameters:
-      - description: comment
-        in: body
-        name: recipe
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
       produces:
       - application/json
       responses:
@@ -209,13 +202,6 @@ paths:
       consumes:
       - application/json
       description: Signout user
-      parameters:
-      - description: some
-        in: body
-        name: recipe
-        required: true
-        schema:
-          $ref: '#/definitions/models.User'
       produces:
       - application/json
       responses:
