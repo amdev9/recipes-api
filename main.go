@@ -9,6 +9,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/gin-contrib/sessions"
+	redisStore "github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
 
 	_ "recipes-api/docs"
@@ -21,7 +23,7 @@ import (
 
 	_ "github.com/joho/godotenv/autoload"
 
-	"github.com/go-redis/redis"
+	redis "github.com/go-redis/redis"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -30,14 +32,6 @@ var authHandler *handlers.AuthHandler
 var recipesHandler *handlers.RecipesHandler
 
 func init() {
-
-	redisClient := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "",
-		DB:       0,
-	})
-	status := redisClient.Ping()
-	fmt.Println(status)
 
 	ctx := context.Background()
 	client, errMongo := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGO_URI")))
@@ -67,9 +61,17 @@ func init() {
 		readpref.Primary()); err != nil {
 		log.Fatal(err)
 	}
-	collection := client.Database(os.Getenv("MONGO_DATABASE")).Collection("recipes")
+	collectionRecipes := client.Database(os.Getenv("MONGO_DATABASE")).Collection("recipes")
 
-	recipesHandler = handlers.NewRecipesHandler(ctx, collection, redisClient)
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	})
+
+	status := redisClient.Ping()
+	fmt.Println(status)
+	recipesHandler = handlers.NewRecipesHandler(ctx, collectionRecipes, redisClient)
 
 	collectionUsers := client.Database(os.Getenv("MONGO_DATABASE")).Collection("users")
 	authHandler = handlers.NewAuthHandler(ctx, collectionUsers)
@@ -109,17 +111,25 @@ func main() {
 	}()
 
 	router := gin.Default()
+
+	store, _ := redisStore.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
+	router.Use(sessions.Sessions("recipes_api", store))
+
 	router.GET("/recipes", recipesHandler.ListRecipesHandler)
+
 	router.POST("/signin", authHandler.SignInHandler)
 	router.POST("/refresh", authHandler.RefreshHandler)
+	router.POST("/signout", authHandler.SignOutHandler)
 
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	authorized := router.Group("/")
 	authorized.Use(authHandler.AuthMiddleware())
+
 	authorized.POST("/recipes", recipesHandler.CreateRecipeHandler)
 	authorized.PUT("/recipes/:id", recipesHandler.UpdateRecipesHandler)
 	authorized.DELETE("/recipes/:id", recipesHandler.DeleteRecipeHandler)
 	authorized.GET("/recipes/search", recipesHandler.SearchRecipesHandler)
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.Run(":3000")
 }

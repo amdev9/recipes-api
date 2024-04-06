@@ -5,8 +5,6 @@ content-type: application/json
 ###
 POST http://localhost:3000/recipes HTTP/1.1
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzEyNDI1NjM4fQ.ChU-H93lwQwqqGUu2z82_P3VIGUxG53gSwA6S7fa9AY
-
 {
     "name": "Homemade Pizza",
     "tags" : ["pizza", "dinner"],
@@ -67,3 +65,6 @@ content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzEyNDI1NjM4fQ.ChU-H93lwQwqqGUu2z82_P3VIGUxG53gSwA6S7fa9AY
 
 
+
+
+{"name": "Homemade Pizza","tags" : ["pizza", "dinner"],"ingredients": [],"instructions":[]}
