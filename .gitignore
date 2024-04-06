@@ -2,6 +2,7 @@
 tmp/
 .env
 certs/
+.DS_Store
 
 
 
