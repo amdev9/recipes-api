@@ -24,15 +24,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// var err error
-
-// var client *mongo.Client
-
-// var collection *mongo.Collection
-// var ctx context.Context
-
-// var recipes []models.Recipe
-
+var authHandler *handlers.AuthHandler
 var recipesHandler *handlers.RecipesHandler
 
 func init() {
@@ -53,9 +45,11 @@ func init() {
 		log.Fatal(err)
 	}
 	collection := client.Database(os.Getenv("MONGO_DATABASE")).Collection("recipes")
+	log.Println("Connected to MongoDB")
 	recipesHandler = handlers.NewRecipesHandler(ctx,
 		collection, redisClient)
-	log.Println("Connected to MongoDB")
+
+	authHandler = &handlers.AuthHandler{}
 }
 
 func cleanup() {
@@ -92,12 +86,15 @@ func main() {
 	}()
 
 	router := gin.Default()
-	router.POST("/recipes", recipesHandler.CreateRecipeHandler)
 	router.GET("/recipes", recipesHandler.ListRecipesHandler)
-	router.PUT("/recipes/:id", recipesHandler.UpdateRecipesHandler)
-	router.DELETE("/recipes/:id", recipesHandler.DeleteRecipeHandler)
-	router.GET("/recipes/search", recipesHandler.SearchRecipesHandler)
-
+	router.POST("/signin", authHandler.SignInHandler)
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	authorized := router.Group("/")
+	authorized.Use(authHandler.AuthMiddleware())
+	authorized.POST("/recipes", recipesHandler.CreateRecipeHandler)
+	authorized.PUT("/recipes/:id", recipesHandler.UpdateRecipesHandler)
+	authorized.DELETE("/recipes/:id", recipesHandler.DeleteRecipeHandler)
+	authorized.GET("/recipes/search", recipesHandler.SearchRecipesHandler)
+
 	router.Run(":3000")
 }
