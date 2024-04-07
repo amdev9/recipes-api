@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	redisStore "github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
@@ -111,7 +112,7 @@ func main() {
 	}()
 
 	router := gin.Default()
-
+	router.Use(cors.Default())
 	store, _ := redisStore.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
 	router.Use(sessions.Sessions("recipes_api", store))
 
@@ -132,5 +133,6 @@ func main() {
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.Run(":3000")
+
 	// router.RunTLS(":443", "certs/localhost.crt", "certs/localhost.key")
 }
